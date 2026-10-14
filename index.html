@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bamor - Hospitality Management Platform for Homestays/Guest House & Hotels</title>
+  <meta name="description" content="Bamor is a hospitality management platform for homestays/Guest House, boutique hotels, and modern hosts. Manage bookings, rooms, food orders, guest services, and hospitality operations from one platform."/>
+  <meta name="keywords" content="homestay management software, hotel management software, hospitality management platform, property management system, guest management software, hotel booking management, hospitality software india, boutique hotel software, best homestay management software, software for homestays in india, hotel management app for small hotels, guest management system for hotels, food ordering system for hotels, service request management for hotels, homestay software, homestay booking management, homestay operations platform, homestay management app, boutique stay software, mountain homestay management, Bamor, Bamor App"/>
+  <link rel="icon" type="image/png" href="assets/images/logo.png"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+  <style>
+
+    /* ===== BASE ===== */
+    body { font-family: 'Inter', sans-serif !important; background-color: #FEFBF7; }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      background: #f4efe8;
+      overflow: hidden;
+      padding-top: 100px;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: right center;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, #f4efe8 25%, rgba(244,239,232,0.7) 48%, transparent 70%);
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 20px 0;
+      background: transparent;
+      transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+    }
+    .navbar.scrolled {
+      background: #ffffff !important;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+      padding: 12px 0;
+    }
+    .navbar-brand img { height: 60px; }
+    .navbar-nav { gap: 32px; }
+    .nav-link {
+      color: #1a1a1a !important;
+      font-weight: 500;
+      font-size: 0.97rem;
+      padding: 0 !important;
+    }
+    .nav-link.active { color: #e8304a !important; font-weight: 600; }
+    .nav-link:hover  { color: #e8304a !important; }
+
+    .btn-get {
+      background: #e8304a;
+      color: #fff;
+      border: none;
+      padding: 11px 26px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.97rem;
+    }
+    .btn-get:hover { background: #c9283f; color: #fff; }
+
+    /* ===== HERO CONTENT ===== */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+    }
+    .hero-content h1 {
+      font-size: 3.1rem;
+      font-weight: 700;
+      font-family: 'Playfair';
+      line-height: 1.05;
+      color: #3d3d3d;
+      margin-bottom: 16px;
+    }
+    .hero-content h1 span { color: #e8304a; display: block; }
+    .hero-content p {
+      color: #222;
+      margin-top: 0;
+      line-height: 2;
+      font-size: 0.95rem;
+      max-width: 295px;
+      margin-bottom: 22px;
+    }
+
+    .btn-download {
+      background: #e8304a;
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.97rem;
+    }
+    .btn-download:hover { background: #c9283f; color: #fff; }
+
+    .btn-learn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1.5px solid #e8304a;
+      border-radius: 12px;
+      padding: 11px 22px;
+      font-weight: 500;
+      font-size: 0.97rem;
+      color: #e8304a;
+      background: transparent;
+      text-decoration: none;
+    }
+    .btn-learn:hover { border-color: #c9283f; color: #c9283f; }
+
+    .play-icon {
+      width: 22px;
+      height: 22px;
+      background: transparent;
+      border-radius: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .play-icon::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 7px 0 7px 13px;
+      border-color: transparent transparent transparent #e8304a;
+      display: block;
+      margin-left: 3px;
+    }
+
+    /* ===== FEATURES SECTION ===== */
+    .feat-label   { color: #e8304a; letter-spacing: 2px; font-size: 1.5rem; }
+    .feat-heading { font-size: 2rem; font-weight: 700; color: #1a1a1a; font-family: 'Playfair'; }
+    .feat-sub     { max-width: 500px; font-size: 0.95rem; }
+
+    .feat-icon-pink  { width: 80px; height: 80px; background: #f5c6ce; }
+    .feat-icon-green { width: 80px; height: 80px; background: #c8e6c9; }
+    .feat-icon-pink,
+    .feat-icon-green {
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+    .feat-icon-pink img,
+    .feat-icon-green img { width: 46px; height: 46px; }
+
+    .feat-card-title {
+      font-family: 'Playfair';
+      font-weight: 700;
+    }
+
+    .col-12.col-sm-6.col-md-4 .border {
+      transition: box-shadow 0.2s ease;
+    }
+    .col-12.col-sm-6.col-md-4 .border:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+    }
+
+    /* ===== FOR EVERYONE SECTION ===== */
+    .for-everyone  { background: #fff; }
+    .for-label     { color: #e8304a; letter-spacing: 2px; font-size: 1.5rem; }
+    .for-heading   { font-size: 2rem; font-weight: 700; color: #1a1a1a; font-family: 'Playfair'; }
+
+    .for-card       { background: #e8f5e9; border-radius: 16px 0 0 16px; padding: 28px; }
+    .for-card.pink  { background: #fde8ec; }
+
+    .for-icon-wrap {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .for-icon-wrap.dark    { background: #314137; }
+    .for-icon-wrap.pink-bg { background: #ef3e58; }
+    .for-icon-wrap img     { width: 42px; height: 42px; }
+
+    .for-photo { border-radius: 0 16px 16px 0; width: 100%; height: 100%; object-fit: cover; min-height: 300px; display: block; overflow: hidden; }
+
+    .check-item { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-size: 0.95rem; color: #333; }
+    .check-circle {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .check-circle.green { background: #314137; }
+    .check-circle.pink  { background: #f37e91; }
+    .check-circle::after {
+      content: '';
+      border-style: solid;
+      border-width: 0 2px 2px 0;
+      border-color: #fff;
+      width: 5px; height: 9px;
+      transform: rotate(45deg);
+      margin-bottom: 2px;
+    }
+    .check-circle.pink::after {
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    /* ===== STAY CLOSER SECTION ===== */
+    .stay-closer-section {
+      background: url('assets/images/qr-bg-img.png') center center / cover no-repeat;
+      position: relative;
+      overflow: hidden;
+    }
+    .stay-inner-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      width: 100%;
+    }
+    .stay-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .stay-right {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    @media (max-width: 991px) {
+      .stay-inner-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      .stay-left {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .stay-right {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .phone-slider {
+        margin: 0 auto !important;
+        left: 0 !important;
+        position: relative !important;
+      }
+    }
+    .stay-heading {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #1a1a1a;
+      letter-spacing: 1px;
+      line-height: 1.2;
+      margin-bottom: 0;
+      text-align: center;
+    }
+    .stay-heading-red {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #e8304a;
+      letter-spacing: 1px;
+      line-height: 1.2;
+      margin-bottom: 0;
+      text-align: center;
+    }
+    .stay-scan-card-img {
+      max-width: 500px;
+      width: 100%;
+      border-radius: 20px;
+      display: block;
+      margin: 0 auto;
+    }
+    .scan-card-wrap {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      max-width: 500px;
+    }
+    .scan-store-btns {
+      position: absolute;
+      bottom: 16%;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      width: 80%;
+    }
+    .scan-store-img {
+      height: 32px;
+      width: auto;
+      display: block;
+    }
+    @media (max-width: 768px) {
+      .scan-store-img { height: 5vw; min-height: 24px; }
+      .scan-store-btns { bottom: 14%; gap: 2%; width: 72%; }
+    }
+    @media (max-width: 480px) {
+      .scan-store-img { height: 4.5vw; min-height: 20px; }
+      .scan-store-btns { bottom: 12%; width: 70%; }
+    }    .phone-slider {
+      position: relative;
+      width: 280px;
+      height: 560px;
+      margin: 0 auto;
+      display: block;
+    }
+    @media (max-width: 991px) {
+      .phone-slider {
+        width: 240px;
+        height: 480px;
+        margin: 0 auto !important;
+      }
+    }
+    @media (max-width: 480px) {
+      .phone-slider {
+        width: 200px;
+        height: 400px;
+        margin: 0 auto !important;
+      }
+    }
+    .phone-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+    .phone-slide.active-slide {
+      opacity: 1;
+    }
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-right: 0;
+    }
+    .stay-phone-img {
+      max-width: 280px;
+      width: 100%;
+      display: block;
+      filter: drop-shadow(0 24px 48px rgba(0,0,0,0.18));
+    }
+
+    /* ===== FAQ SECTION ===== */
+    .faq-section {
+      background: #ffffff;
+    }
+    .faq-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 48px;
+    }
+    .faq-left {
+      width: 40%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+    .faq-right {
+      width: 55%;
+    }
+    .faq-heading {
+      font-size: 2.6rem;
+      font-weight: 800;
+      color: #e8304a;
+      line-height: 1.2;
+      letter-spacing: 1px;
+      text-align: left;
+      font-family: 'Inter', sans-serif !important;
+    }
+    .faq-desc {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.7;
+      max-width: 100%;
+      text-align: left;
+      font-family: 'Inter', sans-serif !important;
+    }
+    .faq-accordion {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      border: 1.5px solid #e8304a;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .faq-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      cursor: pointer;
+      text-align: left;
+      gap: 12px;
+      font-family: 'Playfair';
+    }
+    .faq-btn:hover { background: #fff5f6; }
+    .faq-icon {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      background: #f26175;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0;
+      position: relative;
+    }
+    .faq-icon::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-right: 2.5px solid #fff;
+      border-bottom: 2.5px solid #fff;
+      transform: rotate(45deg);
+      margin-top: -4px;
+    }
+    .faq-item.active .faq-icon::after {
+      transform: rotate(-135deg);
+      margin-top: 4px;
+    }
+    .faq-body {
+      display: none;
+      padding: 0 20px 18px;
+      font-size: 1.05rem;
+      color: #555;
+      line-height: 1.65;
+      font-family: 'Playfair';
+    }
+    .faq-body p { margin: 0; }
+    .faq-item.active .faq-body { display: block; }
+
+    /* ===== TESTIMONIALS SECTION ===== */
+    .testimonials-section { background: #FEFBF7; overflow: hidden; }
+    .testimonials-label {
+      text-align: center;
+      color: #e8304a;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    /* Outer clips to show exactly 3 cards */
+    .testi-slider-outer {
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+    }
+
+    /* Track scrolls via JS, no CSS animation so no blink */
+    .testi-3card-wrap {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: flex-start;
+      will-change: transform;
+    }
+
+    .testi-card-group {
+      position: relative;
+      width: 320px;
+      flex-shrink: 0;
+      padding-top: 55px;
+    }
+
+    /* Back card — tilted colored shadow */
+    .testi-back {
+      position: absolute;
+      top: 60px;
+      left: -8px;
+      right: -8px;
+      bottom: -8px;
+      border-radius: 20px;
+      transform: rotate(3deg);
+      z-index: 0;
+    }
+    .testi-back-green { background: #2d4a3e; }
+    .testi-back-red   { background: #e8304a; }
+    .testi-back-dark  { background: #1a1a2e; }
+
+    /* Front white card */
+    .testi-front {
+      position: relative;
+      background: #fff;
+      border-radius: 20px;
+      border: 1.5px solid #e8e0d8;
+      padding: 60px 24px 32px;
+      min-height: 260px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      z-index: 1;
+    }
+
+    /* Avatar */
+    .testi-avatar-top {
+      position: absolute;
+      top: -45px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 85px; height: 85px;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      z-index: 2;
+      background: #e8e0d8;
+    }
+    .testi-avatar-top img { width:100%; height:100%; object-fit:cover; }
+
+    .testi-front-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      text-align: center;
+      margin-bottom: 10px;
+      font-family: 'Playfair Display', serif;
+    }
+    .testi-front-text {
+      font-size: 0.85rem;
+      color: #555;
+      line-height: 1.65;
+      text-align: center;
+      margin: 0 0 10px;
+    }
+    .testi-role {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #e8304a;
+      text-align: center;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 768px) {
+      .testi-card-group { width: 260px; }
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      background: #fff;
+      padding: 40px 0;
+    }
+    .cta-banner {
+      border-radius: 20px;
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+    }
+    .cta-bg-img {
+      width: 100%;
+      display: block;
+      border-radius: 20px;
+    }
+    .cta-bg-img-mobile {
+      width: 100%;
+      display: none;
+      border-radius: 20px;
+    }
+    .cta-buttons {
+      position: absolute;
+      bottom: 12%;
+      left: 5%;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .store-btn-img {
+      height: 38px;
+      width: auto;
+      display: block;
+    }
+    .cta-buttons-mobile { display: none; }
+    @media (max-width: 1400px) {
+      .cta-buttons { bottom: 10%; }
+      .store-btn-img { height: 34px; }
+    }
+    @media (max-width: 1200px) {
+      .cta-buttons { bottom: 8%; }
+      .store-btn-img { height: 30px; }
+    }
+    @media (max-width: 992px) {
+      .cta-buttons { bottom: 6%; }
+      .store-btn-img { height: 24px; }
+    }
+    @media (max-width: 768px) {
+      .cta-bg-img        { display: none; }
+      .cta-bg-img-mobile { display: block; }
+      .cta-buttons {
+        bottom: 6%;
+        left: 50%;
+        transform: translateX(-50%);
+        justify-content: center;
+        width: 75%;
+        gap: 8px;
+      }
+      .store-btn-img { height: 28px; }
+    }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: #fff;
+      padding: 20px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-copy {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin: 0;
+    }
+    .footer-credit {
+      font-size: 0.9rem;
+      color: #e8304a;
+      font-weight: 600;
+      margin: 0;
+    }
+    .footer-credit a {
+      color: #e8304a;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-credit a:hover { color: #a01e30; }
+    .footer-credit a:active { opacity: 0.6; }
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .social-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 991px) {
+      .row.g-0.align-items-stretch          { flex-direction: column; }
+      .row.g-0.align-items-stretch .col     { width: 100% !important; flex: none !important; }
+      .row.g-0.align-items-stretch .col-auto { display: none !important; }
+      .for-card  { border-radius: 16px 16px 0 0 !important; }
+      .for-photo { border-radius: 0 !important; min-height: 200px; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { min-height: auto; padding: 100px 0 50px; }
+      .hero-bg::after {
+        background: linear-gradient(to right, #f4efe8 45%, rgba(244,239,232,0.5) 65%, transparent 100%);
+      }
+      .hero-bg img { object-position: right center; opacity: 0.9; }
+      .hero-content { min-height: auto; align-items: flex-start; padding: 50px 0 20px; }
+      .hero-content h1 { font-size: 1.9rem; margin-bottom: 12px; }
+      .hero-content p  { max-width: 100%; font-size: 0.9rem; margin-bottom: 18px; }
+      .d-flex.gap-3.align-items-center { flex-wrap: wrap; gap: 12px !important; }
+      .navbar { padding: 12px 0; }
+      .navbar .container { padding: 0 16px; }
+      .navbar-toggler       { border: none; box-shadow: none; padding: 6px 10px; background: rgba(255,255,255,0.9); border-radius: 8px; }
+      .navbar-toggler:focus { box-shadow: none; }
+      .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23333' stroke-width='2.5' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        width: 24px; height: 24px;
+      }
+      .offcanvas  { background: #f4efe8; }
+      .offcanvas-body .navbar-nav { flex-direction: column; gap: 0; }
+      .offcanvas-body .nav-link   { padding: 12px 16px !important; border-bottom: 1px solid rgba(0,0,0,0.1); }
+      .container-fluid { padding-left: 16px !important; padding-right: 16px !important; }
+      .feat-label   { font-size: 1rem; }
+      .feat-heading { font-size: 1.4rem; }
+      .feat-sub     { font-size: 0.88rem; }
+      .feat-icon-pink,
+      .feat-icon-green { width: 60px; height: 60px; margin: 0 auto 1rem; display: flex; }
+      .feat-icon-pink img,
+      .feat-icon-green img { width: 34px; height: 34px; }
+      .feat-card-title, .col-12.col-sm-6.col-md-4 p { text-align: center; }
+      .col-12.col-sm-6.col-md-4 .border { text-align: center !important; }
+      .for-label   { font-size: 1rem; }
+      .for-heading { font-size: 1.3rem; }
+      .for-card   { border-radius: 16px 16px 0 0 !important; }
+      .for-card.pink { margin-top: 24px; border-radius: 16px 16px 0 0 !important; }
+      .for-photo,
+      img.for-photo { width: 100% !important; border-radius: 0 0 8px 8px !important; min-height: 250px; max-width: 100% !important; overflow: hidden; }
+      .owner-col img { border-radius: 0 0 0 16px !important; }
+      .stay-closer-section .row { flex-direction: column; align-items: center; }
+      .stay-closer-section .col-lg-6 { width: 100%; padding: 20px 0 !important; display: flex; justify-content: center; align-items: center; }
+      .stay-heading,
+      .stay-heading-red { font-size: 1.6rem; }
+      .stay-scan-card-img { max-width: 100%; }
+      .stay-phone-img     { max-width: 220px; }
+      .faq-row { flex-direction: column; gap: 32px; }
+      .faq-left,
+      .faq-right { width: 100%; }
+      .faq-heading { font-size: 1.8rem; }
+      .faq-desc    { max-width: 100%; }
+      .cta-buttons { display: none; }
+      .cta-bg-img { width: 100%; height: auto; object-fit: unset; }
+      .cta-buttons-mobile {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 16px;
+      }
+      .store-btn-img { height: 40px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content h1  { font-size: 1.6rem; }
+      .stay-heading,
+      .stay-heading-red { font-size: 1.3rem; }
+      .faq-heading      { font-size: 1.5rem; }
+      .feat-heading     { font-size: 1.2rem; }
+      .for-heading      { font-size: 1.1rem; }
+      .btn-download, .btn-get { padding: 10px 20px; font-size: 0.9rem; }
+      .btn-learn        { padding: 9px 16px; font-size: 0.88rem; }
+      .stay-phone-img   { max-width: 180px; }
+    }
+
+    @media (max-width: 768px) {
+      #scrollTopBtn {
+        bottom: 20px !important;
+        right: 16px !important;
+        width: 38px !important;
+        height: 38px !important;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="assets/images/hero-sec.png" alt="Bamor"/>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg" id="mainNavbar">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="assets/images/logo.png" alt="Bamor"/>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#navOffcanvas">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center d-none d-lg-flex" id="nav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+          <li class="nav-item"><a class="nav-link" href="#owners">For Owners</a></li>
+          <li class="nav-item"><a class="nav-link" href="#guest">For Guest</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+        </ul>
+      </div>
+      <a href="https://play.google.com/store/apps/details?id=com.witds.bamor" target="_blank" class="btn btn-get d-none d-lg-inline-block">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- Mobile offcanvas -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="navOffcanvas">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title">Menu</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link active nav-mobile-link" href="#">Home</a></li>
+        <li class="nav-item"><a class="nav-link nav-mobile-link" href="#features">Features</a></li>
+        <li class="nav-item"><a class="nav-link nav-mobile-link" href="#owners">For Owners</a></li>
+        <li class="nav-item"><a class="nav-link nav-mobile-link" href="#guest">For Guest</a></li>
+        <li class="nav-item"><a class="nav-link nav-mobile-link" href="#about">About Us</a></li>
+      </ul>
+      <a href="https://play.google.com/store/apps/details?id=com.witds.bamor" target="_blank" class="btn btn-get w-100 mt-3 nav-mobile-link">Get Started</a>
+    </div>
+  </div>
+
+  <!-- HERO CONTENT -->
+  <div class="hero-content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5">
+          <h1>Manage with ease.<span>Host with pride.</span></h1>
+          <p>Bamor is an all-in-one homestay, hotel, and restaurant management platform — rooted in Uttarakhand, inspired by nature, and built for modern hospitality.</p>
+          <div class="d-flex gap-3 align-items-center">
+            <a href="https://play.google.com/store/apps/details?id=com.witds.bamor" target="_blank" class="btn btn-download">Download</a>
+            <a href="#features" class="btn-learn">Learn More <span class="play-icon"></span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="py-4 bg-white" id="features">
+  <div class="container-fluid px-5 text-center py-4">
+    <p class="fw-bold text-uppercase mb-2 feat-label">Features</p>
+    <h2 class="fw-bold mb-3 feat-heading">For Owners. For Guests. For Better Experiences.</h2>
+    <p class="text-muted mx-auto mb-5 feat-sub">Powerful tools built for homestays, mini hotels, and restaurants to simplify operations, enhance guest experiences, and grow your business effortlessly.</p>
+    <div class="row g-4">
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="border rounded-3 p-4 h-100 text-start" style="border: 2px solid #e8e0d8 !important;">
+          <div class="feat-icon-pink"><img src="assets/images/booking.png" alt="Booking"/></div>
+          <h6 class="fw-bold mb-2 feat-card-title">Booking Management</h6>
+          <p class="text-muted small mb-0">Manage reservations, check-ins, cancellations and guest details all in one place.</p>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="border rounded-3 p-4 h-100 text-start" style="border: 2px solid #e8e0d8 !important;">
+          <div class="feat-icon-green"><img src="assets/images/property.png" alt="Room"/></div>
+          <h6 class="fw-bold mb-2 feat-card-title">Room &amp; Property Management</h6>
+          <p class="text-muted small mb-0">Add rooms, update availability, manage pricing and amenities effortlessly.</p>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="border rounded-3 p-4 h-100 text-start" style="border: 2px solid #e8e0d8 !important;">
+          <div class="feat-icon-pink"><img src="assets/images/invoice.png" alt="Payment"/></div>
+          <h6 class="fw-bold mb-2 feat-card-title">Payments &amp; Invoices</h6>
+          <p class="text-muted small mb-0">Secure payments, automatic invoices and easy financial tracking.</p>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="border rounded-3 p-4 h-100 text-start" style="border: 2px solid #e8e0d8 !important;">
+          <div class="feat-icon-green"><img src="assets/images/data-analytics.png" alt="Reports"/></div>
+          <h6 class="fw-bold mb-2 feat-card-title">Reports &amp; Analytics</h6>
+          <p class="text-muted small mb-0">Get insights on bookings, revenue, occupancy and performance in real-time.</p>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="border rounded-3 p-4 h-100 text-start" style="border: 2px solid #e8e0d8 !important;">
+          <div class="feat-icon-pink"><img src="assets/images/guest-icon.png" alt="Feature 5"/></div>
+          <h6 class="fw-bold mb-2 feat-card-title">Guest Experience App</h6>
+          <p class="text-muted small mb-0">Allow guests to order food, request services, view bookings, invoices and stay history directly from the app.</p>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="border rounded-3 p-4 h-100 text-start" style="border: 2px solid #e8e0d8 !important;">
+          <div class="feat-icon-green"><img src="assets/images/expenses.png" alt="Feature 6"/></div>
+          <h6 class="fw-bold mb-2 feat-card-title">Expense & Financial Tracking</h6>
+          <p class="text-muted small mb-0">Monitor operational expenses, manage vendor payments and keep track of your property finances effortlessly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR EVERYONE -->
+<section class="for-everyone py-3" id="owners">
+  <div class="container-fluid px-5 py-2 text-center">
+    <p class="fw-bold text-uppercase mb-2 for-label">MADE FOR MODERN HOSPITALITY</p>
+    <h2 class="fw-bold mb-5 for-heading">For Owners. For Guests. For Better Stays.</h2>
+    <div class="row g-0 align-items-stretch">
+      <div class="col">
+        <div class="for-card h-100 text-start">
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="for-icon-wrap dark"><img src="assets/images/owner-icon.png" alt="Owner"/></div>
+            <span class="fw-semibold fs-6">For Owner</span>
+          </div>
+          <div class="check-item"><span class="check-circle green"></span> Manage bookings, check-ins & check-outs</div>
+          <div class="check-item"><span class="check-circle green"></span> Handle rooms, pricing & availability</div>
+          <div class="check-item"><span class="check-circle green"></span> Manage restaurant orders & guest services</div>
+          <div class="check-item"><span class="check-circle green"></span> Track expenses, revenue & reports</div>
+          <div class="check-item"><span class="check-circle green"></span> Simplify daily operations across your property
+</div>
+        </div>
+      </div>
+      <div class="col">
+        <img src="assets/images/owner.png" alt="Owner Photo" class="for-photo"/>
+      </div>
+      <div class="col-auto" style="width:24px;"></div>
+      <div class="col" id="guest">
+        <div class="for-card pink h-100 text-start">
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="for-icon-wrap pink-bg"><img src="assets/images/guest-2.png" alt="Guest"/></div>
+            <span class="fw-semibold fs-6">For Guest</span>
+          </div>
+          <div class="check-item"><span class="check-circle pink"></span>  View bookings & stay history</div>
+          <div class="check-item"><span class="check-circle pink"></span> Order food directly from the app</div>
+          <div class="check-item"><span class="check-circle pink"></span> Request services instantly</div>
+          <div class="check-item"><span class="check-circle pink"></span> Access invoices & booking details</div>
+          <div class="check-item"><span class="check-circle pink"></span> Enjoy a seamless digital stay experience</div>
+        </div>
+      </div>
+      <div class="col">
+        <img src="assets/images/guest.png" alt="Guest Photo" class="for-photo"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STAY CLOSER SECTION -->
+<section class="stay-closer-section" id="about">
+  <div style="padding: 40px 24px; width:100%; box-sizing:border-box;">
+    <div class="stay-inner-row">
+      <div class="stay-left">
+        <h2 class="stay-heading">STAY CLOSER TO NATURE.</h2>
+        <h2 class="stay-heading-red mb-4">STAY WITH BAMOR.</h2>
+        <div class="scan-card-wrap">
+          <img src="assets/images/scan-to-download.png" alt="Scan to Download" class="stay-scan-card-img"/>
+          <div class="scan-store-btns">
+            <a href="https://play.google.com/store/apps/details?id=com.witds.bamor" target="_blank">
+              <img src="assets/images/google-play.png" alt="Get it on Google Play" class="scan-store-img"/>
+            </a>
+            <a href="#" onclick="showComingSoon(); return false;">
+              <img src="assets/images/app-store.png" alt="Download on App Store" class="scan-store-img"/>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="stay-right" style="text-align:center; display:flex; justify-content:center; align-items:center;">
+        <div class="phone-slider">
+          <img src="assets/images/app-dashboard.png" alt="Bamor App" class="stay-phone-img phone-slide active-slide"/>
+          <img src="assets/images/app-dashboard-2.png" alt="Bamor App 2" class="stay-phone-img phone-slide"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTION -->
+<section class="faq-section" id="faq">
+  <div class="container-fluid px-5 py-5">
+    <div class="faq-row">
+      <div class="faq-left">
+        <h2 class="faq-heading">FREQUENTLY ASKED<br>QUESTIONS</h2>
+        <p class="faq-desc mt-3">Find answers to common queries about our Bamor platform, including bookings, payments, cancellations, and stay policies. This section is designed to help you quickly access the information you need for a smooth and hassle-free experience.</p>
+      </div>
+      <div class="faq-right">
+        <div class="faq-accordion">
+          <div class="faq-item active">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span>What is Bamor?</span>
+              <span class="faq-icon"></span>
+            </button>
+            <div class="faq-body">
+              <p>Bamor is a complete hotel, homestay, and restaurant management platform designed for modern hospitality businesses. Owners can manage bookings, check-ins, check-outs, rooms, food orders, services, expenses, and daily operations, while guests can view bookings, order food, request services, and access their stay history — all from one seamless app.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span>Who can use Bamor?</span>
+              <span class="faq-icon"></span>
+            </button>
+            <div class="faq-body">
+              <p>Bamor is designed for hotel, homestay, café, and restaurant owners to manage their daily operations efficiently. Guests can also use the app to view bookings, order food, request services, access invoices, and manage their stay experience seamlessly.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span>Is Bamor suitable for small homestays and boutique hotels?</span>
+              <span class="faq-icon"></span>
+            </button>
+            <div class="faq-body">
+              <p>Yes, Bamor is built for properties of all sizes — from small homestays and boutique hotels to cafés and restaurants. Its simple and flexible tools help businesses manage operations, guests, bookings, food orders, and daily activities with ease.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span>Is Bamor suitable for properties without technical staff?</span>
+              <span class="faq-icon"></span>
+            </button>
+            <div class="faq-body">
+              <p>Absolutely. Bamor is designed with a simple and user-friendly interface so homestay and hotel owners can manage operations easily without technical expertise.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span>Can guests order food and request services through the app?</span>
+              <span class="faq-icon"></span>
+            </button>
+            <div class="faq-body">
+              <p>Yes, guests can order food, request room services, view invoices, track bookings, and access their complete stay history directly through the Bamor app for a seamless stay experience.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span>Can I track expenses, revenue, and reports in Bamor?</span>
+              <span class="faq-icon"></span>
+            </button>
+            <div class="faq-body">
+              <p>Yes, Bamor allows you to track expenses, revenue, bookings, food sales, and detailed business reports in one place. You can also manage and monitor your personal finances alongside your property operations for complete financial visibility.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span>Can guests view their booking history and invoices?</span>
+              <span class="faq-icon"></span>
+            </button>
+            <div class="faq-body">
+              <p>Yes, guests can easily access their booking history, invoices, past food orders, and service requests directly through the Bamor app for a smooth and connected stay experience.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span>Does Bamor send notifications and booking reminders?</span>
+              <span class="faq-icon"></span>
+            </button>
+            <div class="faq-body">
+              <p>Yes, Bamor sends booking reminders, stay updates, and real-time notifications for food orders, service requests, check-ins, check-outs, and other important activities directly through the app.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-btn" onclick="toggleFaq(this)">
+              <span>Can Bamor help improve the guest experience?</span>
+              <span class="faq-icon"></span>
+            </button>
+            <div class="faq-body">
+              <p>Yes, guests can order food, request services, receive notifications, access invoices, and manage their bookings directly through the app for a seamless stay experience.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="testimonials-section" id="testimonials">
+  <div class="container-fluid px-5 py-5">
+    <p class="testimonials-label">OUR CLIENTS FEEDBACK</p>
+
+    <div class="testi-slider-outer">
+      <div class="testi-3card-wrap" id="testiTrack">
+
+        <!-- Card 1 — green back -->
+        <div class="testi-card-group">
+          <div class="testi-back testi-back-green"></div>
+          <div class="testi-front">
+            <div class="testi-avatar-top"><img src="assets/images/testimonial-4.png" alt="Khushi"/></div>
+            <h4 class="testi-front-name">Amit Rawat</h4>
+            <p class="testi-front-text">We used to manage everything on calls and notebooks. After using Bamor, bookings, check-ins, food orders — everything feels much more organized now.</p>
+            <p class="testi-role">Homestay Owner, Mussoorie</p>
+          </div>
+        </div>
+
+        <!-- Card 2 — red back -->
+        <div class="testi-card-group">
+          <div class="testi-back testi-back-red"></div>
+          <div class="testi-front">
+            <div class="testi-avatar-top"><img src="assets/images/testimonial-3.png" alt="Tanya"/></div>
+            <h4 class="testi-front-name">Rahul Bhatt</h4>
+            <p class="testi-front-text">Guests now place food orders directly from the app, and our staff handles requests much faster. It actually reduced a lot of daily confusion.</p>
+            <p class="testi-role">Hotel Owner, Rishikesh</p>
+          </div>
+        </div>
+
+        <!-- Card 3 — dark back -->
+        <div class="testi-card-group">
+          <div class="testi-back testi-back-dark"></div>
+          <div class="testi-front">
+            <div class="testi-avatar-top"><img src="assets/images/testimonial-2.png" alt="Rahul"/></div>
+            <h4 class="testi-front-name">Deepak Joshi</h4>
+            <p class="testi-front-text">I liked that the app is simple. Even our staff learned it quickly. We now track bookings, expenses, and guest requests from one place.</p>
+            <p class="testi-role">Resort Manager, Nainital</p>
+          </div>
+        </div>
+        <div class="testi-card-group">
+          <div class="testi-back testi-back-dark"></div>
+          <div class="testi-front">
+            <div class="testi-avatar-top"><img src="assets/images/testimonial-5.png" alt="Rahul"/></div>
+            <h4 class="testi-front-name">Sukhveer butola</h4>
+            <p class="testi-front-text">The best thing is that both the owner and guest app work together smoothly. Guests can see bookings and request services directly.</p>
+            <p class="testi-role">Homestay Owner, Dehradun</p>
+          </div>
+        </div>
+        <div class="testi-card-group">
+          <div class="testi-back testi-back-dark"></div>
+          <div class="testi-front">
+            <div class="testi-avatar-top"><img src="assets/images/testimonial-6.png" alt="Rahul"/></div>
+            <h4 class="testi-front-name">Kanika Rana</h4>
+            <p class="testi-front-text">Our guests really like the food ordering feature. They don’t have to call reception again and again now.</p>
+                   <p class="testi-role">Homestay Owner, Rudraprayag</p>
+          </div>
+        </div>
+
+      
+
+      </div>
+    </div>
+  </div>
+</section>
+<section class="cta-section">
+  <div class="container-fluid px-5">
+    <div class="cta-banner">
+      <!-- Desktop image -->
+      <img src="assets/images/footer-img.png" alt="Bamor CTA" class="cta-bg-img"/>
+      <!-- Mobile image -->
+      <img src="assets/images/footer-img-mobile.png" alt="Bamor CTA Mobile" class="cta-bg-img-mobile"/>
+      <!-- Buttons overlay (desktop) -->
+      <div class="cta-buttons">
+        <a href="https://play.google.com/store/apps/details?id=com.witds.bamor" target="_blank">
+          <img src="assets/images/google-play.png" alt="Get it on Google Play" class="store-btn-img"/>
+        </a>
+        <a href="#" onclick="showComingSoon(); return false;">
+          <img src="assets/images/app-store.png" alt="Download on App Store" class="store-btn-img"/>
+        </a>
+      </div>
+    </div>
+    <!-- Buttons below image (mobile) -->
+    <div class="cta-buttons-mobile">
+      <a href="https://play.google.com/store/apps/details?id=com.witds.bamor" target="_blank">
+        <img src="assets/images/google-play.png" alt="Get it on Google Play" class="store-btn-img"/>
+      </a>
+      <a href="#" onclick="showComingSoon(); return false;">
+        <img src="assets/images/app-store.png" alt="Download on App Store" class="store-btn-img"/>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container-fluid px-5">
+    <div class="footer-inner">
+      <p class="footer-copy">© 2026 Bamor. All Rights Reserved.</p>
+      <p class="footer-credit">A Product by <a href="https://witds.com" target="_blank" rel="noopener noreferrer">World IT Dimensional Solutions</a></p>
+      <div class="footer-socials">
+        <a href="https://www.facebook.com/profile.php?id=61591077292410" target="_blank" rel="noopener noreferrer" class="social-icon" style="background:#1877F2;">
+          <svg width="18" height="18" fill="#fff" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@Bamor-App" target="_blank" rel="noopener noreferrer" class="social-icon" style="background:#FF0000;">
+          <svg width="18" height="18" fill="#fff" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/bamor_app" target="_blank" rel="noopener noreferrer" class="social-icon" style="background:#E1306C;">
+          <svg width="18" height="18" fill="#fff" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll to top on page load/refresh
+  window.onbeforeunload = function() {
+    window.scrollTo(0, 0);
+  };
+  if (history.scrollRestoration) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+
+  function showComingSoon() {
+    var sb = document.getElementById('comingSoonSnackbar');
+    sb.style.display = 'block';
+    setTimeout(function() { sb.style.display = 'none'; }, 3000);
+  }
+
+  // Mobile nav — close offcanvas then scroll to section
+  document.addEventListener('DOMContentLoaded', function() {
+    var mobileLinks = document.querySelectorAll('.nav-mobile-link');
+    mobileLinks.forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var href = link.getAttribute('href');
+        // Close the offcanvas first
+        var offcanvasEl = document.getElementById('navOffcanvas');
+        if (offcanvasEl) {
+          var bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvasEl);
+          if (bsOffcanvas) {
+            bsOffcanvas.hide();
+          }
+        }
+        // If it's a hash link, scroll after offcanvas closes
+        if (href && href !== '#' && href.startsWith('#')) {
+          e.preventDefault();
+          setTimeout(function() {
+            var target = document.querySelector(href);
+            if (target) {
+              target.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 300);
+        }
+      });
+    });
+  });
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isActive = item.classList.contains('active');
+    // Close all items first
+    document.querySelectorAll('.faq-item').forEach(function(el) {
+      el.classList.remove('active');
+    });
+    // If it wasn't already open, open it
+    if (!isActive) {
+      item.classList.add('active');
+    }
+  }
+
+  // Sticky navbar
+  function updateNavbar() {
+    var navbar = document.getElementById('mainNavbar');
+    if (window.scrollY > 10) {
+      navbar.style.cssText = 'background:#ffffff !important; box-shadow:0 2px 16px rgba(0,0,0,0.10); padding:10px 0; position:fixed; top:0; left:0; right:0; z-index:1000; transition:background 0.3s ease;';
+    } else {
+      navbar.style.cssText = 'background:transparent; box-shadow:none; padding:20px 0; position:fixed; top:0; left:0; right:0; z-index:1000; transition:background 0.3s ease;';
+    }
+  }
+  window.addEventListener('scroll', updateNavbar);
+  updateNavbar();
+
+  // Testimonials — smooth blink-free infinite slider
+  (function() {
+    var outer = document.querySelector('.testi-slider-outer');
+    var track = document.getElementById('testiTrack');
+    if (!track || !outer) return;
+
+    var origCards = Array.from(track.querySelectorAll('.testi-card-group'));
+    if (!origCards.length) return;
+
+    var GAP = 120;
+    var CARD_W, STEP, totalOrigW;
+    // Clone once for seamless loop
+    origCards.forEach(function(c) { track.appendChild(c.cloneNode(true)); });
+
+    track.style.display    = 'flex';
+    track.style.flexWrap   = 'nowrap';
+    track.style.alignItems = 'flex-start';
+    track.style.willChange = 'transform';
+    track.style.padding    = '55px 0 30px';
+
+    outer.style.overflow = 'hidden';
+    outer.style.width    = '100%';
+
+    function init() {
+      var outerW = outer.offsetWidth;
+      var isMobile = outerW < 768;
+
+      if (isMobile) {
+        GAP    = 60;
+        CARD_W = outerW - 60;
+      } else {
+        GAP    = 120;
+        CARD_W = Math.floor((outerW - GAP * 2) / 3);
+      }
+
+      STEP       = CARD_W + GAP;
+      totalOrigW = origCards.length * STEP;
+      track.querySelectorAll('.testi-card-group').forEach(function(c) {
+        c.style.width = CARD_W + 'px';
+      });
+      track.style.gap     = GAP + 'px';
+      track.style.padding = isMobile ? '55px 30px 30px' : '55px 0 30px';
+      posX = 0;
+      track.style.transform = 'translateX(0px)';
+    }
+
+    var posX   = 0;
+    var speed  = 0.4;
+    var paused = false;
+    var lastT  = null;
+
+    init();
+    window.addEventListener('resize', init);
+
+    function tick(ts) {
+      if (lastT === null) lastT = ts;
+      var dt = ts - lastT;
+      lastT  = ts;
+      if (!paused) {
+        posX += speed * (dt / 16.67);
+        if (posX >= totalOrigW) posX -= totalOrigW;
+        track.style.transform = 'translateX(-' + posX + 'px)';
+      }
+      requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+
+    outer.addEventListener('mouseenter', function() { paused = true; });
+    outer.addEventListener('mouseleave', function() { paused = false; });
+  })();
+
+  // Phone slider
+  (function() {
+    var slides = document.querySelectorAll('.phone-slide');
+    if (!slides.length) return;
+    var cur = 0;
+    slides[0].classList.add('active-slide');
+    setInterval(function() {
+      slides[cur].classList.remove('active-slide');
+      cur = (cur + 1) % slides.length;
+      slides[cur].classList.add('active-slide');
+    }, 5000);
+  })();
+</script>
+<!-- VIDEO MODAL -->
+<!-- VIDEO MODAL WITH SLIDER -->
+<div id="videoModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center; flex-direction:column;">
+
+  <!-- Close button -->
+  <button onclick="closeVideoModal()" style="position:fixed; top:18px; right:22px; background:transparent; border:none; color:#fff; font-size:2.2rem; cursor:pointer; z-index:10001; line-height:1;">&times;</button>
+
+  <!-- Main video -->
+  <div style="position:relative; width:90%; max-width:820px; background:#000; border-radius:12px; overflow:hidden;">
+    <div style="position:relative; padding-bottom:56.25%; height:0;">
+      <iframe id="videoFrame" src="" width="100%" height="100%"
+        style="position:absolute; top:0; left:0; width:100%; height:100%;"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Slider thumbnails -->
+  <div style="display:flex; align-items:center; gap:12px; margin-top:18px; width:90%; max-width:820px;">
+
+    <!-- Prev arrow -->
+    <button onclick="changeVideo(-1)" style="background:rgba(255,255,255,0.15); border:none; color:#fff; width:36px; height:36px; border-radius:50%; font-size:1.1rem; cursor:pointer; flex-shrink:0;">&#8249;</button>
+
+    <!-- Thumbnails track -->
+    <div style="flex:1; overflow:hidden;">
+      <div id="thumbTrack" style="display:flex; gap:10px; transition:transform 0.4s ease;">
+        <!-- thumbs inserted by JS -->
+      </div>
+    </div>
+
+    <!-- Next arrow -->
+    <button onclick="changeVideo(1)" style="background:rgba(255,255,255,0.15); border:none; color:#fff; width:36px; height:36px; border-radius:50%; font-size:1.1rem; cursor:pointer; flex-shrink:0;">&#8250;</button>
+
+  </div>
+
+  <!-- Video counter -->
+  <p id="videoCounter" style="color:rgba(255,255,255,0.6); font-size:0.85rem; margin-top:8px;"></p>
+</div>
+
+<script>
+  var videos = [
+    { id: 'Hr5iLG7sUa0', title: 'Bamor - Intro' },
+    { id: 'dQw4w9WgXcQ', title: 'Video 2' },
+    { id: 'tgbNymZ7vqY', title: 'Video 3' },
+    { id: 'jNQXAC9IVRw', title: 'Video 4' }
+  ];
+  var currentVideo = 0;
+
+  function openVideoModal(index) {
+    index = index || 0;
+    currentVideo = index;
+    buildThumbs();
+    loadVideo(currentVideo);
+    document.getElementById('videoModal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVideoModal() {
+    document.getElementById('videoFrame').src = '';
+    document.getElementById('videoModal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function loadVideo(index) {
+    currentVideo = index;
+    document.getElementById('videoFrame').src = 'https://www.youtube.com/embed/' + videos[index].id + '?autoplay=1';
+    document.getElementById('videoCounter').textContent = (index + 1) + ' / ' + videos.length;
+    // highlight active thumb
+    var thumbs = document.querySelectorAll('.vid-thumb');
+    thumbs.forEach(function(t, i) {
+      t.style.border = i === index ? '3px solid #e8304a' : '3px solid transparent';
+      t.style.opacity = i === index ? '1' : '0.6';
+    });
+  }
+
+  function changeVideo(dir) {
+    var next = (currentVideo + dir + videos.length) % videos.length;
+    loadVideo(next);
+  }
+
+  function buildThumbs() {
+    var track = document.getElementById('thumbTrack');
+    track.innerHTML = '';
+    videos.forEach(function(v, i) {
+      var img = document.createElement('img');
+      img.src = 'https://img.youtube.com/vi/' + v.id + '/mqdefault.jpg';
+      img.alt = v.title;
+      img.className = 'vid-thumb';
+      img.style.cssText = 'width:130px; height:75px; object-fit:cover; border-radius:8px; cursor:pointer; flex-shrink:0; opacity:0.6; border:3px solid transparent; transition:all 0.2s;';
+      img.onclick = (function(idx){ return function(){ loadVideo(idx); }; })(i);
+      track.appendChild(img);
+    });
+  }
+
+  document.getElementById('videoModal').addEventListener('click', function(e) {
+    if (e.target === this) closeVideoModal();
+  });
+
+  // Sticky navbar on scroll
+  window.addEventListener('scroll', function() {
+    var navbar = document.getElementById('mainNavbar');
+    if (window.scrollY > 50) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+
+    // Scroll to top button
+    var btn = document.getElementById('scrollTopBtn');
+    if (window.scrollY > 300) {
+      btn.style.display = 'flex';
+    } else {
+      btn.style.display = 'none';
+    }
+
+    // Active nav link on scroll
+    var sections = [
+      { id: null,        link: '#'         },
+      { id: 'features',  link: '#features' },
+      { id: 'owners',    link: '#owners'   },
+      { id: 'guest',     link: '#guest'    },
+      { id: 'about',     link: '#about'    }
+    ];
+    var scrollPos = window.scrollY + 80;
+    var current = '#';
+    sections.forEach(function(s) {
+      if (s.id) {
+        var el = document.getElementById(s.id);
+        if (el && el.offsetTop <= scrollPos) current = s.link;
+      }
+    });
+    document.querySelectorAll('.nav-link').forEach(function(a) {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === current) a.classList.add('active');
+    });
+  });
+</script>
+
+<!-- COMING SOON SNACKBAR -->
+<div id="comingSoonSnackbar" style="
+  display:none;
+  min-width:220px;
+  max-width:90vw;
+  background:#1a1a1a;
+  color:#fff;
+  text-align:center;
+  border-radius:10px;
+  padding:14px 24px;
+  position:fixed;
+  bottom:40px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:99999;
+  font-size:0.93rem;
+  font-family:'Inter',sans-serif;
+  font-weight:500;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  white-space:nowrap;
+">iOS App — Coming Soon!</div>
+
+<!-- SCROLL TO TOP BUTTON -->
+<button id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="
+  display:none;
+  position:fixed;
+  bottom:80px;
+  right:28px;
+  z-index:9999;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#e8304a;
+  border:none;
+  cursor:pointer;
+  box-shadow:0 4px 16px rgba(232,48,74,0.35);
+  align-items:center;
+  justify-content:center;
+">
+  <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+    <path d="M12 19V5M5 12l7-7 7 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
